@@ -1,6 +1,6 @@
 module StageReg_3(
   input         clk,
-                reset,
+                rst_n,
   input  [63:0] io_in_ex_result,
                 io_in_mem_writedata,
                 io_in_nextpc,
@@ -20,7 +20,7 @@ module StageReg_3(
   reg        reg_taken;
   reg [63:0] reg_instruction;
   always @(posedge clk) begin
-    if (reset) begin
+    if (!rst_n) begin
       reg_ex_result <= 64'h0;
       reg_mem_writedata <= 64'h0;
       reg_nextpc <= 64'h0;

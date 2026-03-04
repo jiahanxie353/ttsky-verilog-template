@@ -1,6 +1,6 @@
 module StageReg_2(
   input        clk,
-               reset,
+               rst_n,
                io_in_ex_ctrl_itype,
                io_in_ex_ctrl_aluop,
                io_in_ex_ctrl_src1,
@@ -38,7 +38,7 @@ module StageReg_2(
   reg       reg_wb_ctrl_toreg;
   reg       reg_wb_ctrl_regwrite;
   always @(posedge clk) begin
-    if (reset) begin
+    if (!rst_n) begin
       reg_ex_ctrl_itype <= 1'h0;
       reg_ex_ctrl_aluop <= 1'h0;
       reg_ex_ctrl_src1 <= 1'h0;

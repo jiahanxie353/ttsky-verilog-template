@@ -1,6 +1,6 @@
 module PipelinedCPU(
   input         clk,
-                reset,
+                rst_n,
   output [63:0] io_imem_address,
   output        io_imem_valid,
   input         io_imem_good,
@@ -109,7 +109,7 @@ module PipelinedCPU(
       ? _mem_wb_io_data_readdata
       : _mem_wb_io_data_ex_result;
   always @(posedge clk) begin
-    if (reset)
+    if (!rst_n)
       pc <= 64'h0;
     else if (_hazard_io_pcfromtaken)
       pc <= _ex_mem_io_data_nextpc;
@@ -206,7 +206,7 @@ module PipelinedCPU(
   );
   StageReg if_id (
     .clk               (clk),
-    .reset               (reset),
+    .rst_n               (rst_n),
     .io_in_instruction
       (_GEN[3:0] == 4'h4 ? io_imem_instruction[63:32] : io_imem_instruction[31:0]),
     .io_in_pc            (pc),
@@ -217,7 +217,7 @@ module PipelinedCPU(
   );
   StageReg_1 id_ex (
     .clk               (clk),
-    .reset               (reset),
+    .rst_n               (rst_n),
     .io_in_pc            (_if_id_io_data_pc),
     .io_in_instruction   (immGen_io_instruction),
     .io_in_sextImm       (_immGen_io_sextImm),
@@ -232,7 +232,7 @@ module PipelinedCPU(
   );
   StageReg_2 id_ex_ctrl (
     .clk                        (clk),
-    .reset                        (reset),
+    .rst_n                        (rst_n),
     .io_in_ex_ctrl_itype          (_control_io_itype),
     .io_in_ex_ctrl_aluop          (_control_io_aluop),
     .io_in_ex_ctrl_src1           (_control_io_src1),
@@ -259,7 +259,7 @@ module PipelinedCPU(
   );
   StageReg_3 ex_mem (
     .clk                 (clk),
-    .reset                 (reset),
+    .rst_n                 (rst_n),
     .io_in_ex_result
       (_id_ex_ctrl_io_data_ex_ctrl_resultselect
          ? _id_ex_io_data_sextImm
@@ -277,7 +277,7 @@ module PipelinedCPU(
   );
   StageReg_4 ex_mem_ctrl (
     .clk                    (clk),
-    .reset                    (reset),
+    .rst_n                    (rst_n),
     .io_in_mem_ctrl_memop     (_id_ex_ctrl_io_data_mem_ctrl_memop),
     .io_in_wb_ctrl_toreg      (_id_ex_ctrl_io_data_wb_ctrl_toreg),
     .io_in_wb_ctrl_regwrite   (_id_ex_ctrl_io_data_wb_ctrl_regwrite),
@@ -288,7 +288,7 @@ module PipelinedCPU(
   );
   StageReg_5 mem_wb (
     .clk               (clk),
-    .reset               (reset),
+    .rst_n               (rst_n),
     .io_in_readdata      (io_dmem_readdata),
     .io_in_ex_result     (_ex_mem_io_data_ex_result),
     .io_in_instruction   (_ex_mem_io_data_instruction),
@@ -298,7 +298,7 @@ module PipelinedCPU(
   );
   StageReg_6 mem_wb_ctrl (
     .clk                    (clk),
-    .reset                    (reset),
+    .rst_n                    (rst_n),
     .io_in_wb_ctrl_toreg      (_ex_mem_ctrl_io_data_wb_ctrl_toreg),
     .io_in_wb_ctrl_regwrite   (_ex_mem_ctrl_io_data_wb_ctrl_regwrite),
     .io_data_wb_ctrl_toreg    (_mem_wb_ctrl_io_data_wb_ctrl_toreg),

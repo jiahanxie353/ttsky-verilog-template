@@ -1,6 +1,6 @@
 module StageReg_1(
   input         clk,
-                reset,
+                rst_n,
   input  [63:0] io_in_pc,
                 io_in_instruction,
                 io_in_sextImm,
@@ -20,7 +20,7 @@ module StageReg_1(
   reg [63:0] reg_readdata1;
   reg [63:0] reg_readdata2;
   always @(posedge clk) begin
-    if (reset) begin
+    if (!rst_n) begin
       reg_pc <= 64'h0;
       reg_instruction <= 64'h0;
       reg_sextImm <= 64'h0;

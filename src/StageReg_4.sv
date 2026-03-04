@@ -1,6 +1,6 @@
 module StageReg_4(
   input        clk,
-               reset,
+               rst_n,
   input  [1:0] io_in_mem_ctrl_memop,
   input        io_in_wb_ctrl_toreg,
                io_in_wb_ctrl_regwrite,
@@ -14,7 +14,7 @@ module StageReg_4(
   reg       reg_wb_ctrl_toreg;
   reg       reg_wb_ctrl_regwrite;
   always @(posedge clk) begin
-    if (reset) begin
+    if (!rst_n) begin
       reg_mem_ctrl_memop <= 2'h0;
       reg_wb_ctrl_toreg <= 1'h0;
       reg_wb_ctrl_regwrite <= 1'h0;
