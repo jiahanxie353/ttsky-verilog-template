@@ -18,6 +18,22 @@ project:
   # Don't forget to also update `PROJECT_SOURCES` in test/Makefile.
   source_files:
     - "project.v"
+    - "Adder.sv"
+    - "ALU.sv"
+    - "ALUControl.sv"
+    - "Control.sv"
+    - "ForwardingUnit.sv"
+    - "HazardUnit.sv"
+    - "ImmediateGenerator.sv"
+    - "NextPC.sv"
+    - "RegisterFile.sv"
+    - "StageReg.sv"
+    - "StageReg_1.sv"
+    - "StageReg_2.sv"
+    - "StageReg_3.sv"
+    - "StageReg_4.sv"
+    - "StageReg_5.sv"
+    - "StageReg_6.sv"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
