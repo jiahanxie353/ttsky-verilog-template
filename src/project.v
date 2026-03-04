@@ -1,4 +1,4 @@
-module PipelinedCPU(
+module tt_um_pipelined_dino_jiahanxie353(
   input         clk,
                 rst_n,
   output [63:0] io_imem_address,

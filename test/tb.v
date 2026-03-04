@@ -30,7 +30,7 @@ module tb ();
   reg         io_dmem_good;
   reg  [63:0] io_dmem_readdata;
 
-  PipelinedCPU dut (
+  tt_um_pipelined_dino_jiahanxie353 dut (
     .clk                (clk),
     .rst_n              (rst_n),
     .io_imem_address    (io_imem_address),
